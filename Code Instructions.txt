@@ -1,0 +1,90 @@
+Data Wrangling instructions: 
+
+This R script processes greenhouse gas (GHG) emissions data from an Excel file, organizes it into a clean format, and prepares it for analysis and visualization. Follow these steps to execute the script:
+
+Prerequisites
+
+1. Install the required R libraries:
+   install.packages(c("readr", "janitor", "readxl", "dplyr", "tidyr"))
+
+2. Ensure the dataset GHG_rawdata.xlsx is located in your working directory.
+
+Steps to Run the Script
+
+1. Set the Working Directory
+   Replace ~/Rdirectory with the path to your working directory:
+   setwd("~/Rdirectory")
+
+2. Load and Prepare the Data
+   The script reads data from different sheets in the Excel file, cleans it, and combines it into a single dataset.
+
+3. Analyze and Explore the Data
+   Use the following commands to explore the dataset:
+   View(all_gases_emission)
+   str(all_gases_emission)
+
+4. Subset and Aggregate Data
+   Data is grouped by sectors and gas types for analysis. Key datasets created include:
+   - Consumer_data_long: Consumer expenditure data.
+   - sector_data: Emissions data by sectors.
+   - top10ghg: Top 10 sectors contributing to emissions.
+
+5. Generate Visualizations
+   Example: Generate a stacked area chart using the top10ghg dataset.
+
+6. Clean Up
+   Temporary datasets are removed to optimize memory:
+   rm(GHG_filtered, other_sectors_row)
+
+Additional Notes
+
+- Use view() to inspect datasets.
+- Export datasets for further exploration:
+   write.csv(top10ghg, "top10ghg.csv", row.names = FALSE)
+-----------------------------------------------------------------
+
+Analysis Instructions: 
+
+### Instructions for Data Exploratory and Analysis
+1. Setting Up Training and Test Data
+- Split the dataset into training and test datasets.
+- Normalize the emissions data by converting it into million tonnes for better readability.
+
+2. Descriptive Statistics for Each Sector
+- Calculate summary statistics (minimum, maximum, mean, median, and standard deviation) for emissions data grouped by sectors.
+- Save the summarized statistics into a CSV file for further reference.
+
+3. Exploring Linear Relationships
+- Use scatterplots to visualize the relationship between year and emissions for each sector.
+- Overlay linear regression trend lines on the scatterplots to identify trends over time.
+
+4. Correlation Testing
+- Calculate the correlation between year and emissions for each sector to assess the strength of linear relationships.
+- Save the correlation results into a CSV file.
+
+5. Fitting Linear Regression Models
+- Fit linear regression models for each sector using year as the predictor and emissions as the response variable.
+- Extract residuals and coefficients (intercept and slope) from the models and save them into CSV files.
+
+6. Evaluating Model Performance
+- Compute model performance metrics such as R-squared values for each sector to evaluate the fit of the regression models.
+- Save these evaluation metrics into a CSV file for detailed analysis.
+
+7. Making Predictions
+- Use the linear regression models to predict future emissions for each sector up to the year 2050.
+- Combine historical and predicted emissions data for comparison and visualization.
+
+8. Visualizing Results
+- Create visualizations to compare historical and projected emissions data.
+- Use stacked area charts to show contributions of different sectors to total emissions over time.
+- Highlight significant trends and annotate important milestones like the transition from historical to projected data.
+
+9. Model Evaluation and Refinement
+- Evaluate model predictions using metrics such as Mean Absolute Error (MAE) and Root Mean Square Error (RMSE).
+- Identify strong, moderate, and weak sectors based on the model’s performance metrics.
+
+These instructions will help you conduct a comprehensive analysis of greenhouse gas emissions data, evaluate sectoral contributions, and project future trends.
+
+
+For questions or contributions, feel free to raise an issue or submit a pull request!
+Aibrahem1
