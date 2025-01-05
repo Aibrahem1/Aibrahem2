@@ -4,7 +4,9 @@
 
 Welcome to the repository for the project **"Data Analysis of UK Greenhouse Gas Emissions"**, a sectoral exploration of GHG trends from 1990 to 2023, with projections toward the **Net-Zero 2050 emissions target**.
 
-![Greenhouse Gas Emissions](https://github.com/Aibrahem1/IN6027-Intro-to-Data-Science/blob/main/Graphs/repository%20banner.jpg?raw=true)
+<div align="center">
+  <img src="https://github.com/Aibrahem1/IN6027-Intro-to-Data-Science/blob/main/Graphs/repository%20banner.jpg?raw=true" alt="Greenhouse Gas Emissions" width="80%">
+</div>
 
 ---
 
