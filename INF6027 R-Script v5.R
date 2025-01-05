@@ -1,4 +1,4 @@
-#Intial data exploration and cleaning
+#Initial data exploration and cleaning
 
 str(top10ghg)
 
