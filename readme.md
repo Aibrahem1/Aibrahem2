@@ -56,18 +56,31 @@ This project investigates:
 ## 📂 **Repository Structure**
 
 ```
-|-- data/
-|   |-- greenhouse_emissions.csv
+|-- Code Extra/
+|   |-- additional scripts
 |
-|-- scripts/
-|   |-- analysis.R
-|   |-- visualization.R
+|-- Data Science Project/
+|   |-- INF6027_DataScience.Rproj
+|   |-- DataScienceRdatav10.RData
+|   |-- GHG_rawdata.xlsx
 |
-|-- results/
-|   |-- plots/
-|   |-- summary_statistics.csv
+|-- Files/
+|   |-- contains exported analysed data is csv format 
 |
-|-- README.md
+|-- Graphs/
+|   |-- included generated graphs
+|
+|-- RData Extra/
+|   |-- initial stages data wrangling versions
+|
+|-- DataScienceRdatav10.RData
+|   |-- Main Data used in the analysis
+|
+|-- INF6027 R-Script v5.R
+|   |-- Main Analysis R-Language Code
+|
+|-- .gitignore
+|-- readme.md
 ```
 
 ---
