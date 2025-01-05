@@ -4,7 +4,7 @@
 
 Welcome to the repository for the project **"Data Analysis of UK Greenhouse Gas Emissions"**, a sectoral exploration of GHG trends from 1990 to 2023, with projections toward the **Net-Zero 2050 emissions target**.
 
-![Greenhouse Gas Emissions](https://via.placeholder.com/800x300?text=Greenhouse+Gas+Analysis)
+![Greenhouse Gas Emissions](https://github.com/Aibrahem1/IN6027-Intro-to-Data-Science/blob/main/Graphs/Historical%20&%20Projected%20Emssions.png?raw=true)
 
 ---
 
@@ -22,6 +22,7 @@ This project investigates:
 ### Trends
 - **Decline in emissions**: Most sectors show a consistent decline in GHG emissions.
 - **Transport and Retail Sectors**: Exhibit increasing emissions trends.
+![Scatter Plot](https://github.com/Aibrahem1/IN6027-Intro-to-Data-Science/blob/main/Graphs/Linear%20Trend%20Plot.png?raw=true)
 
 ### Modeling Outcomes
 - **Strong Fit**: Sectors like Manufacturing, Mining, and Public Administration exhibit excellent linear regression fits (R² > 0.8).
@@ -35,7 +36,7 @@ This project investigates:
 - **Predictive Modeling**: Projections using linear regression for informed decision-making.
 - **Visualization**: Interactive plots for deeper understanding of trends.
 
-![Scatter Plot](https://via.placeholder.com/500x300?text=Scatter+Plot+Visualization)
+![Scatter Plot](https://github.com/Aibrahem1/IN6027-Intro-to-Data-Science/blob/main/Graphs/Historical%20&%20Projected%20Emssions.png?raw=true)
 
 ---
 
