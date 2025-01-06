@@ -1,4 +1,4 @@
-#Initial data exploration and cleaning
+#Initial EDA
 
 str(top10ghg)
 
