@@ -1,12 +1,15 @@
-#Initial EDA
+# Prerequisite: Ensure the "INF_Datawrangling" script has been executed to create the "top10ghg" dataset used here.
 
+
+#____PART 1
+# Perform initial exploratory data analysis (EDA) by examining the structure of the "top10ghg" dataset.
 str(top10ghg)
+nrow(top10ghg) #To decide the data spliting 80/20
 
-#_______________Data exploratory 
-#1.---------------- Setting up training and test data
-nrow(top10ghg)
-top10ghg_train<-top10ghg[1:300,]  # to train the model
-top10ghg_test<-top10ghg[301:374,] # to test the model
+#1.Setting up training and test data
+
+top10ghg_train<-top10ghg[1:300,]  # to train the model #80%
+top10ghg_test<-top10ghg[301:374,] # to test the model  #20%
 
 
 analysis1<- top10ghg_train %>% 
@@ -14,7 +17,7 @@ analysis1<- top10ghg_train %>%
   mutate(Emissions=Emissions/1000) %>% #to convert the values to Million Tonnes
   view()
 
-#2.-----------------Descriptive statistics for each sector
+#2.Descriptive statistics for each sector
 
 analysis1_summary <- analysis1 %>%
   group_by(Sector) %>% 
@@ -27,7 +30,7 @@ analysis1_summary <- analysis1 %>%
 
 write.csv(analysis1_summary, "analysis1_summary.csv", row.names = FALSE)
 
-#3.-----------------Exploring linear relationship using GGPLOT
+#3.Exploring linear relationship using GGPLOT
 library(tidyverse)
 #for all sectors
 top10ghg_train %>% 
@@ -38,7 +41,7 @@ top10ghg_train %>%
   theme_minimal()+
   labs(title = "Emissions Over Time for Manufacturing Sector",
        x = "Year", y = "Emissions (Million Tonnes")
-#4.----------------Correlation Testing--------------------
+#4.Correlation Testing
 
 Correlation1_analysis<-
   top10ghg_train %>%
@@ -49,12 +52,12 @@ Correlation1_analysis<-
   write.csv("correlation1_analysis.csv", row.names = FALSE)
 
 
-#5.-----------Fit Linear Regression Models- R2 and Residuals----
+#5.Fit Linear Regression Models- R2 and Residuals----
 #Required Libraries
 library(tidyverse)
 library(broom)
 
-# _______calculate and extract residuals for a linear regression model 
+#6.calculate and extract residuals for a linear regression model 
 
 residuals0 <- analysis1 %>% #using the train dataset
   group_by(Sector) %>%
@@ -65,7 +68,7 @@ residuals0 <- analysis1 %>% #using the train dataset
   view()# Get residuals
 
 
-# Extract residuals and save to CSV
+#7.Extract residuals and save to CSV
 analysis1 %>%
   group_by(Sector) %>%
   nest() %>%
@@ -77,7 +80,7 @@ analysis1 %>%
   select(-data, -model) %>%                              # Drop unnecessary list columns
   write.csv("Residuals_values.csv", row.names = FALSE)   # Save to CSV
 
-# _______ Extracting coefficients (intercept & Slope)
+#8.Extracting coefficients (intercept & Slope)
 
 coefficients <- residuals0 %>%
   mutate(
@@ -85,20 +88,20 @@ coefficients <- residuals0 %>%
   ) %>%
   unnest(coefficients)
 
-# View coefficients
+#9.View coefficients
 print(coefficients)
 
-# Export cofficients
+#10.Export cofficients
 coefficients %>%
   select(-data, -model, -residuals) %>% 
   write.csv("coefficients.csv", row.names = FALSE)
 
-#________________Residuals_______________________
-#. Unnest Residuals To visualize residuals, unnest the residuals into a single data frame:
+#11. Residuals
+#11.(a)Unnest Residuals To visualize residuals, unnest the residuals into a single data frame:
 residuals1 <- residuals0 %>%
   unnest(residuals)
 
-#Residuals Visualize Residuals Per Sector
+#11.(b) Residuals Visualize Residuals Per Sector
 #. Plot Residuals Per Sector Use ggplot2 to visualize residuals for each sector:
 residuals1 %>%
   ggplot(aes(x = year, y = .resid, color = Sector)) +
@@ -112,14 +115,14 @@ residuals1 %>%
   ) +
   theme_minimal()
 
-#______________R-Square________________
+#12. R-Square
 #Extract R-squared and coefficients for each sector
 model_summaries <- residuals0 %>%
   mutate(
     summary = map(model, glance),  # Model-level metrics (e.g., R-squared)
     coefficients = map(model, tidy)) # Coefficients (intercept and slope)
 
-# Unnest summaries to view R-squared and other metrics
+#12.(a). Unnest summaries to view R-squared and other metrics
 r_squared_table <- model_summaries %>%
   unnest(summary) %>%
   select(Sector, r.squared, adj.r.squared, p.value)
@@ -127,7 +130,7 @@ r_squared_table <- model_summaries %>%
 print(r_squared_table)
 write.csv(r_squared_table,"R_square_table.csv", row.names = FALSE)
 
-# Plot of R-Square values
+#12.(b). Plot of R-Square values
 r_squared_table %>%
   distinct(Sector, r.squared) %>%
   ggplot(aes(x = Sector, y = r.squared)) +
@@ -143,27 +146,27 @@ r_squared_table %>%
     plot.title = element_text(hjust = 0.5, face = "bold") # Center and bold the plot title
   )
 
-# Extract R-squared and coefficients for each sector
+#13. Extract R-squared and coefficients for each sector
 residuals0 %>%
   mutate(summary = map(model, glance),     # Model-level metrics (e.g., R-squared)
          coefficients = map(model, tidy)) # Coefficients (intercept and slope)
-
-
-# ------------------Making predictions with the linear regression model  ----
-# ___________Define the future years for prediction
+#____PART 2
+# ------------------Making predictions with the linear regression model  ---------------
+#1. Define the future years for prediction
 future_years <- data.frame(year = 2024:2050) #net Zero by 2050
 
-#____________Fitting the linear regression model using test data
+#-------------------------------------------------------
+#Fitting the linear regression model using test data
 models <- top10ghg_test %>% #using a model of test data (unseen)
   group_by(Sector) %>%
   nest() %>%
   mutate(model = map(data,
                      ~lm(Emissions ~ year, 
                          data = .x)))  # Fit linear models
+#-------------------------------------------------------
 
-#___________Predict Future Emissions Using Test Data
-
-#1. Make predictions for future years  (Strong, Moderate, Weak) with test data using pipe
+#2.Predict Future Emissions Using Test Data
+#2.1. Make predictions for future years  (Strong, Moderate, Weak) with test data using pipe
 predictions_lr <- top10ghg_test %>%
   group_by(Sector) %>%
   nest() %>%
@@ -175,10 +178,10 @@ predictions_lr <- top10ghg_test %>%
   unnest(predicted) %>% 
   view()
 
-#2. exploring
+#2.2. exploring
 glimpse(predictions_lr)
 
-#3. Sectors Strong and moderate sectors (excluding Weak)
+#2.3. Sectors Strong and moderate sectors (excluding Weak)
 predictions_lr_f <- top10ghg_test %>%
   filter(!Sector %in% c("	Consumer Exp", "Transport")) %>% # Replace "Sector1" and "Sector2" with sectors to exclude
   group_by(Sector) %>%
@@ -191,9 +194,10 @@ predictions_lr_f <- top10ghg_test %>%
   select(Sector, predicted) %>%
   unnest(predicted)
 
-#exploring
+#2.4. exploring
 glimpse(predictions_lr_f)
 
+#____PART 3
 #------Plotting Historical vs. Predicted Trends from LR Model for Strong & Moderate Sectors----
 #Required Library:
 library(tidyverse)
